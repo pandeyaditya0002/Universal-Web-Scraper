@@ -1,0 +1,39 @@
+<!--  Frontend UI (HTML + JavaScript) -->
+<!-- # templates/index.html - Frontend UI -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Scraper</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Universal Web Scraper</h1>
+        <form id="scrape-form">
+            <input type="text" id="url" name="url" placeholder="Enter URL to scrape" required>
+            <button type="submit">Scrape</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById("scrape-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let url = document.getElementById("url").value;
+            
+            fetch("/scrape", {
+                method: "POST",
+                body: new URLSearchParams({ "url": url }),
+                headers: { "Content-Type": "application/x-www-form-urlencoded" }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("result").innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+            })
+            .catch(error => console.error("Error:", error));
+        });
+    </script>
+</body>
+</html>

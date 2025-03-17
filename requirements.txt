@@ -1,0 +1,9 @@
+# Required Python libraries 
+Flask
+selenium
+pandas
+webdriver-manager
+Install Dependencies:
+Run the following command in your project directory:
+
+pip install -r requirements.txt
